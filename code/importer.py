@@ -7,8 +7,8 @@ django.setup()
 
 import csv
 from django.contrib.auth.models import User
-# from core.models import Course, CourseMember
-from core.models import Course
+from core.models import Course, CourseMember
+# from core.models import Course
 
 with open('./dummy_data/user-data.csv') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -29,11 +29,11 @@ with open('./dummy_data/course-data.csv') as csvfile:
 					price=row['price'],
 					teacher=User.objects.get(pk=int(row['teacher'])))
             
-# with open('dummy_data/member-data.csv') as csvfile:
-#     reader = csv.DictReader(csvfile)
-#     for num, row in enumerate(reader):
-#         if not CourseMember.objects.filter(pk=num+1).exists():
-#             CourseMember.objects.create(
-# 		            course_id=Course.objects.get(pk=int(row['course_id'])),
-# 					user_id=User.objects.get(pk=int(row['user_id'])),
-# 					id=num+1, roles=row['roles'])
+with open('dummy_data/member-data.csv') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for num, row in enumerate(reader):
+        if not CourseMember.objects.filter(pk=num+1).exists():
+            CourseMember.objects.create(
+		            course_id=Course.objects.get(pk=int(row['course_id'])),
+					user_id=User.objects.get(pk=int(row['user_id'])),
+					id=num+1, roles=row['roles'])
